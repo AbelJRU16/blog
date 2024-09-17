@@ -1,0 +1,40 @@
+body{
+    background-image: url('../img/bg-image.png');
+}
+
+.form-signin {
+    max-width: 540px;
+    padding: 1rem;
+}
+
+.h-100vh{
+    height: 100vh;
+}
+
+.mt-90{
+    margin-top: 90px;
+}
+
+.navbar-brand:link, .navbar-brand:visited{    
+    color: silver !important;
+    font-weight: 600;
+    transition: 1s;
+}
+
+.navbar-brand:hover, .navbar-brand:active{
+    color: white !important;
+    font-weight: 700;
+    transition: 1s;
+}
+
+.nav-item a:link, .nav-item a:visited{
+    color: silver !important;
+    transition: 1s;
+}
+
+.nav-item a:hover, .nav-item a:active{    
+    color: white !important;
+    font-weight: 600;
+    transition: 1s;
+}
+
