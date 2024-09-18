@@ -2,6 +2,15 @@ body{
     background-image: url('../img/bg-image.png');
 }
 
+.br-none{
+    border-right: none;
+}
+
+.btn-visibility{
+    border: none;
+    background: white;
+}
+
 .form-signin {
     max-width: 540px;
     padding: 1rem;

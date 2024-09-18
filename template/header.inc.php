@@ -1,3 +1,11 @@
+<?php
+include_once "app/config.inc.php";
+include_once "app/SessionControl.inc.php";
+include_once "app/Redirection.inc.php";
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

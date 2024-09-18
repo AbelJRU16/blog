@@ -1,11 +1,9 @@
 <?php
-include_once "app/Connection.inc.php";
-include_once "app/UserRepository.php";
-
 $title = "Blog - Registro";
-
 include_once "template/header.inc.php";
-//include_once "template/navbar.inc.php";
+if(SessionControl::session_init()){
+    Redirection::redirect(SERVER);
+}
 ?>
 
 <div class="d-flex align-items-center h-100vh py-4 m-3">
@@ -32,8 +30,11 @@ include_once "template/header.inc.php";
             </div>   
             <div class="input-group mb-3">
                 <div class="form-floating">
-                    <input type="email" class="form-control" placeholder="Clave" id="form_password" name="form_password">
+                    <input type="password" class="form-control br-none" placeholder="Clave" id="form_password" name="form_password">
                     <label for="form_password">Clave</label>
+                </div>
+                <div class="input-group-text btn-visibility" type="button" onclick="change_visibility('form_password', this)">
+                    <i class="fa-solid fa-eye"></i>
                 </div>
                 <span class="input-group-text" id="basic-addon1">
                     <i class="fa-solid fa-key"></i>
@@ -41,39 +42,50 @@ include_once "template/header.inc.php";
             </div>   
             <div class="input-group mb-3">
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="form_password_confirmation" placeholder="Repetir clave" name="form_password_confirmation">
+                    <input type="password" class="form-control br-none" id="form_password_confirmation" placeholder="Repetir clave" name="form_password_confirmation">
                     <label for="form_password_confirmation">Repetir clave</label>
+                </div>
+                <div class="input-group-text btn-visibility" type="button" onclick="change_visibility('form_password_confirmation', this)">
+                    <i class="fa-solid fa-eye"></i>
                 </div>
                 <span class="input-group-text" id="basic-addon1">
                     <i class="fa-solid fa-lock"></i>
                 </span>
-            </div>    
-            <!-- <div class="form-check text-start my-3">
-                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Remember me
-                </label>
-            </div> -->
+            </div>
             <p class="text-center text-white">
-                Ya posees un usuario? <a href="#">Inicia sesion</a>
+                Ya posees un usuario? <a href="inicio-sesion.php">Inicia sesion</a>
             </p>
             <p class="text-center text-white">
                 Para volver a la pagina de inicio <a href="index.php">haz click aqui</a>
             </p>
-            <button class="btn btn-primary w-100 py-2" type="submit">
+            <button class="btn btn-primary w-100 py-2" id="btn-form" type="button">
                 <i class="fa-solid fa-right-to-bracket"></i> Registrate
             </button>
         </form>
     </main>
 </div>
 
-<!-- <div class="container">
-    <div class="p-5 mb-4 bg-dark rounded-3 mt-90 text-white">
-        <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold text-center">Formulario de Registro</h1>
-        </div>
-    </div>
-</div> -->
+<?php
+    include_once "template/scripts.inc.php";
+?>
+<script>    
+    $("#btn-form").click(function(e){
+        e.preventDefault();
+        let data = {
+            username: $("#form_name").val(),
+            email: $("#form_email").val(),
+            password: $("#form_password").val(),
+            password_confirmation: $("#form_password_confirmation").val(),
+        }
+        let resp;
+        add_data_post("controllers/users.php?action=create", data, function(response){
+            resp = response;
+            if(resp.code == "201"){
+                document.querySelector("form").reset();
+            }
+        });
+    });
+</script>
 
 <?php
     include_once "template/footer.inc.php";
