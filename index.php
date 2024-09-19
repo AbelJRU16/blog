@@ -1,6 +1,6 @@
 <?php
 include_once "app/Connection.inc.php";
-include_once "app/UserRepository.inc.php";
+include_once "app/repositories/UserRepository.inc.php";
 
 $title = "Blog";
 include_once "template/header.inc.php";
@@ -56,7 +56,7 @@ include_once "template/navbar.inc.php";
             <div class="row">
                 <div class="col-md-12">
                     <div class="card bg-body-tertiary">
-                        <div class="card-header">
+                        <div class="card-header bg-dark text-white">
                             <i class="fa-regular fa-clock"></i> Ultimas entradas
                         </div>
                         <div class="card-body">
