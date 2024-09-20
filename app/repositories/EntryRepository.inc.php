@@ -32,4 +32,52 @@ class EntryRepository{
         return $flag;
     }
 
+    public static function get_entries_count($connection){
+        $total_entries = 0;
+        if(isset($connection)){
+            try {
+
+                $sql = "SELECT count(*) as total FROM entrys";
+                $sentence = $connection->prepare($sql);
+                $sentence->execute();
+                $result = $sentence->fetch();
+
+                $total_entries = $result["total"];
+
+            } catch (PDOException $ex) {
+                print "ERROR: ".$ex->getMessage()."<br>";
+            }
+        }   
+        return $total_entries;
+    }
+
+    public static function get_entries($connection, $page=1){
+        $entries = [];
+        if(isset($connection)){
+            try {
+                $offset = ($page - 1) * 5;
+                $sql = "SELECT * FROM entrys LIMIT $offset, 5";
+                $sentence = $connection->prepare($sql);
+                $sentence->execute();
+                $result = $sentence->fetchAll();
+
+                if(count($result)){
+                    foreach($result as $row){
+                        $entries[] = new Entry(
+                            $row["id"],
+                            $row["author_id"],
+                            $row["title"],
+                            $row["content"],
+                            $row["fecha"],
+                            $row["active"],
+                        );
+                    }
+                }
+            } catch (PDOException $ex) {
+                print "ERROR: ".$ex->getMessage()."<br>";
+            }
+        }
+        return $entries;
+    }
+
 }

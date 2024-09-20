@@ -47,3 +47,19 @@ body{
     transition: 1s;
 }
 
+.see-more{
+    text-decoration: none;
+    font-style: italic;
+    color: black;
+}
+
+.see-more:hover{
+    font-weight: 600;
+    transition: 1s;
+}
+
+nav ul li a{
+    background: rgb(33, 37, 41) !important    ;
+    color: white !important;
+}
+
