@@ -1,12 +1,12 @@
 <?php
 include_once "app/Connection.inc.php";
 include_once "app/repositories/UserRepository.inc.php";
-include_once "app/repositories/EntryRepository.inc.php";
+//include_once "app/repositories/EntryRepository.inc.php";
 
-Connection::open_connection();
-$entries = EntryRepository::get_entries(Connection::get_connection());
-$total_entries = EntryRepository::get_entries_count(Connection::get_connection());
-Connection::close_connection();
+//Connection::open_connection();
+//$entries = EntryRepository::get_entries(Connection::get_connection());
+//$total_entries = EntryRepository::get_entries_count(Connection::get_connection());
+//Connection::close_connection();
 
 $title = "Blog";
 include_once "template/header.inc.php";
@@ -61,50 +61,13 @@ include_once "template/navbar.inc.php";
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
-                    <?php
-                        if(count($entries)){
-                            ?>
-                            <div id="entries">
-                            <?php
-                            foreach($entries as $entry){
-                            ?>
-                            <div class="card bg-body-tertiary">
-                                <div class="card-header bg-dark text-white">
-                                    <i class="fa-regular fa-clock"></i> <?php echo $entry->get_title(); ?>
-                                </div>
-                                <div class="card-body">
-                                    <p><?php echo $entry->get_fecha(); ?></p>
-                                    <p>
-                                        <?php
-                                        $content = substr($entry->get_content() , 0, 200);
-                                        $link = "<a href=entry/".$entry->get_id()." class='see-more'>... Ver mas.</a>";
-                                        echo $content.$link; 
-                                        ?>
-                                    </p>
-                                </div>
-                            </div>
-                            <br>                       
-                            <?php
-                            }
-                            ?>
-                            </div>
-                            <?php
-                            if($total_entries > 5){
-                                include_once "template/pagination.inc.php";
-                            }
-                        }else{
-                            ?>
-                            <div class="card bg-body-tertiary">
-                                <div class="card-header bg-dark text-white">
-                                    <i class="fa-regular fa-clock"></i> Ultimas entradas
-                                </div>
-                                <div class="card-body">
-                                    <p>Aun no hay entradas disponibles</p>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                    ?>
+                    <div id="entries"></div>
+                    <div class="d-flex justify-content-center w-100">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,5 +76,16 @@ include_once "template/navbar.inc.php";
 
 <?php
     include_once "template/scripts.inc.php";
+?>
+
+<script>
+
+$("document").ready(function(){
+    change_pagination(1);
+});
+
+</script>
+
+<?php
     include_once "template/footer.inc.php";
 ?>

@@ -31,6 +31,7 @@ function get_entries(){
 
     Connection::open_connection();
     $entries = EntryRepository::get_entries(Connection::get_connection(), $page);
+    $total = EntryRepository::get_entries_count(Connection::get_connection());
     Connection::close_connection();
 
     foreach($entries as $entry){
@@ -49,6 +50,7 @@ function get_entries(){
         'message'=> 'Se ha devuleto los resultados',
         'page' => $page,
         'data' => $result,
+        'count' => $total,
         'code'=> '200',
     ];
     

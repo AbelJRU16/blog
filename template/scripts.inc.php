@@ -5,3 +5,4 @@
 <script src="https://kit.fontawesome.com/d426b639ac.js" crossorigin="anonymous"></script>
 <script src="js/backend_functions.js"></script>
 <script src="js/global_functions.js"></script>
+<script src="js/pagination_functions.js"></script>
