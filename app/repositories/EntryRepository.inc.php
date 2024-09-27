@@ -10,7 +10,7 @@ class EntryRepository{
             try {
                 
                 $sql = "INSERT INTO entrys(author_id, title, content, fecha, active) 
-                    VALUES (:author_id, :title, :content, NOW(), 0)";
+                    VALUES (:author_id, :title, :content, NOW(), :active)";
 
                 $query = $connection->prepare($sql);
 
@@ -21,6 +21,7 @@ class EntryRepository{
                 $query->bindParam(":author_id", $entry["author_id"], PDO::PARAM_STR);
                 $query->bindParam(":title", $entry["title"], PDO::PARAM_STR);
                 $query->bindParam(":content", $entry["content"], PDO::PARAM_STR);
+                $query->bindParam(":active", $entry["active"], PDO::PARAM_STR);
 
                 $query->execute() or die('Query failed.');
 

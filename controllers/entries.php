@@ -14,6 +14,8 @@ if($action === "get"){
 }else if($action === "show"){
     $id = (isset($_GET["id"]) && !empty($_GET["id"])) ? $_GET["id"] : '';
     show($id);
+}else if($action === "create"){
+    create();
 }else{
     //header('HTTP/1.1 404 Not Found');
     $json = [
@@ -83,3 +85,22 @@ function show($id){
     echo $jsonstring;
 }
 
+function create(){
+    $data = [
+        'author_id' => $_POST['author_id'],
+        'title' => $_POST['title'],
+        'content' => $_POST['content'],
+        'active' => $_POST['active'],
+    ];
+    Connection::open_connection();
+    $flag = EntryRepository::insert_entry(Connection::get_connection(), $data);
+    Connection::close_connection();
+    $json = [
+        'status'=> 'success',
+        'message'=> 'Se ha registrado exitosamente.',
+        'text' => '',
+        'code'=> '201',
+    ];
+    $jsonstring = json_encode($json);
+    echo $jsonstring;
+}

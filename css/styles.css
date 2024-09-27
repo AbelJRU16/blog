@@ -16,6 +16,15 @@ nav ul li a{
     background: white;
 }
 
+.custom-textarea{
+    height: 500px;    /* Altura fija de 500px */
+    resize: none;     /* Desactiva la capacidad de redimensionar el textarea */
+    padding: 10px;    /* Añade un poco de espacio interno */
+    font-family: Arial, sans-serif;  /* Fuente opcional */
+    font-size: 16px;  /* Tamaño de letra opcional */
+    box-sizing: border-box;
+}
+
 .form-signin {
     max-width: 540px;
     padding: 1rem;

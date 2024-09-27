@@ -32,6 +32,6 @@ class SessionControl{
             session_start();
         }
         
-        return (isset($_SESSION["user_id"]) && $_SESSION["user_name"]);
+        return (isset($_SESSION["user_id"]) && isset($_SESSION["user_name"]));
     }
 }

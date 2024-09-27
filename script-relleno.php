@@ -27,6 +27,7 @@ for ($entry=0; $entry < 100; $entry++) {
         "author_id" => rand(1, 100),
         "title" => random_string(20),
         "content" => lorem(),
+        "active" => 1,
     ]; 
     EntryRepository::insert_entry(Connection::get_connection(), $data);
 }

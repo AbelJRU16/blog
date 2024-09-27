@@ -9,6 +9,8 @@ $mode = (isset($_GET["mode"]) && !empty($_GET["mode"])) ? $_GET["mode"] : 'view'
 $title = "Blog";
 include_once "template/header.inc.php";
 include_once "template/navbar.inc.php";
+
+SessionControl::session_init();
 ?>
 
 <div class="container mt-5">
@@ -30,16 +32,40 @@ include_once "template/navbar.inc.php";
                                 else{
                                     ?>
                                     <div class="text-justify" id="content">
-                                    <div class="input-group mb-3">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="form_name" name="form_name" placeholder="Nombre de Usuario">
-                                                <label for="form_name">Titulo</label>
-                                            </div>
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="fa-solid fa-user"></i>
-                                            </span>
+                                        <div class="row">
+                                            <form>
+                                                <div class="col-md-10 offset-md-1">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            <i class="fa-solid fa-user"></i>
+                                                        </span>
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" id="title">
+                                                            <label for="form_name">Titulo</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10 offset-md-1">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-file-text" aria-hidden="true"></i>
+                                                        </span>
+                                                        <textarea class="form-control custom-textarea" placeholder="Contenido..." id="entry_content"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 offset-md-5 mt-3">
+                                                    <div class="mb-3 d-flex justify-content-center align-items-center gap-2">
+                                                        <input class="form-check-input mt-0" type="checkbox" value="" id="active">
+                                                        <label for="active" class="">Activo?</label>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-                                         
+                                        <div class="w-100 d-flex justify-content-center">
+                                            <button class="btn btn-dark" onclick="saveEntry()">
+                                                <i class="fa fa-save" aria-hidden="true"></i> Guardar
+                                            </button>
+                                        </div>
                                     </div>
                                     <?php
                                 }
@@ -62,15 +88,15 @@ let isLoading = false;
 
 $("document").ready(function(){
     let id = <?php echo $id; ?>;
-    let mode = <?php echo $mode; ?>;
+    let mode = '<?php echo $mode; ?>';
     if(id) getEntry(id, mode);
 });
 
 const getEntry = (id, mode) => {
     isLoading = true;
     const data = getData("controllers/entries.php?action=show&id=<?php echo $id ?>", function(response){
+        let {entry} = response;
         if(mode == 'view'){
-            let {entry} = response;
             let template = '';
             template += '<h4>'+entry.title+'</h4>'
             template += '<p><i class="fa fa-calendar" aria-hidden="true"></i> '+entry.fecha;
@@ -78,11 +104,31 @@ const getEntry = (id, mode) => {
             template += '<p>'+entry.content+'</p>';
             document.querySelector('#content').innerHTML = template;
         }else{
-
+            document.querySelector("#title").value = entry.title;
+            document.querySelector("#entry_content").value = entry.content;
+            document.querySelector("#active").checked = entry.active;
         }
     });
-} 
+}
 
+const saveEntry = () => {    
+    let id = <?php echo $id; ?>;
+    let mode = '<?php echo $mode; ?>';
+    let data = {
+        author_id: 101,
+        title: document.querySelector("#title").value,
+        content: document.querySelector("#entry_content").value,
+        active: (document.querySelector("#active").checked) ? 1 : 0,
+    }
+    if(mode == 'create'){
+        add_data_post("controllers/entries.php?action=create", data, function(response){
+            resp = response;
+            if(resp.code == "201"){
+                document.querySelector("form").reset();
+            }
+        });
+    }
+}
 </script>
 
 <?php
