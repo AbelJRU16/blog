@@ -11,6 +11,9 @@ if(isset($_GET["action"]) && !empty($_GET["action"])){
 
 if($action === "get"){
     get_entries();
+}else if($action === "show"){
+    $id = (isset($_GET["id"]) && !empty($_GET["id"])) ? $_GET["id"] : '';
+    show($id);
 }else{
     //header('HTTP/1.1 404 Not Found');
     $json = [
@@ -54,6 +57,28 @@ function get_entries(){
         'code'=> '200',
     ];
     
+    $jsonstring = json_encode($json);
+    echo $jsonstring;
+}
+
+function show($id){
+    if($id != ''){
+        Connection::open_connection();
+        $entry = EntryRepository::get_entry(Connection::get_connection(), $id);
+        Connection::close_connection();
+        $json = [
+            'status'=> 'OK',
+            'message'=> 'Se ha devuleto la entrada',
+            'entry' => $entry,
+            'code'=> '200',
+        ];        
+    }else{
+        $json = [
+            'status'=> 'Not Found',
+            'message'=> 'Ha ocurrido un error',
+            'code'=> '404',
+        ];
+    }
     $jsonstring = json_encode($json);
     echo $jsonstring;
 }

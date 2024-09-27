@@ -71,7 +71,7 @@ class UserRepository{
 
                 $result = $query->fetch();
 
-                $exist = (count($result)) ? true : false;
+                $exist = (!isset($result)) ? true : false;
             } catch (PDOException $ex) {
                 print "ERROR: ".$ex->getMessage()."<br>";
             }

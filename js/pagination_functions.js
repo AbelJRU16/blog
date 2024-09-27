@@ -83,7 +83,7 @@ function refresh_data(data){
         template += '        <p>'+element.fecha+'</p>';
         template += '        <p>';
         template += '           '+element.content.substr(0, 200);
-        template += '           <a href=entry/'+element.id+' class="see-more">... Ver mas.</a>';
+        template += '           <a href=entry.php?id='+element.id+' class="see-more">... Ver mas.</a>';
         template += '       </p>';
         template += '    </div>';
         template += '</div>';

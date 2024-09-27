@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users(
     email varchar(255) not null unique,
     password varchar(255) not null,
     register_date DATETIME not null,
-    activo TINYINT NOT NULL,
+    active TINYINT NOT NULL,
     primary key(id)
 );
 

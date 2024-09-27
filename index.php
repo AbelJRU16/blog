@@ -1,12 +1,6 @@
 <?php
 include_once "app/Connection.inc.php";
 include_once "app/repositories/UserRepository.inc.php";
-//include_once "app/repositories/EntryRepository.inc.php";
-
-//Connection::open_connection();
-//$entries = EntryRepository::get_entries(Connection::get_connection());
-//$total_entries = EntryRepository::get_entries_count(Connection::get_connection());
-//Connection::close_connection();
 
 $title = "Blog";
 include_once "template/header.inc.php";

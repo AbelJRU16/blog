@@ -80,4 +80,39 @@ class EntryRepository{
         return $entries;
     }
 
+    public static function get_entry($connection, $id){
+        $entry = [];
+
+        if(isset($connection)){
+            try {
+
+                $sql = "SELECT * FROM entrys WHERE id = :id";
+                $query = $connection->prepare($sql);
+                $query->bindParam(":id", $id, PDO::PARAM_INT);
+
+                if ($query === false) {
+                    die("Error in the preparation of the query: " . $connection->error);
+                }
+
+                $query->execute() or die('Query failed.');
+
+                $result = $query->fetch();
+
+                if(!empty($result)) {
+                    $entry = [
+                        'id' => $result["id"],
+                        'author_id' => $result["author_id"],
+                        'title' => $result["title"],
+                        'content' => $result["content"],
+                        'fecha' => $result["fecha"],
+                        'active' => $result["active"],
+                    ];
+                }
+            } catch (PDOException $ex) {
+                print "ERROR: ".$ex->getMessage()."<br>";
+            }
+        }
+        return $entry;
+    }
+
 }
